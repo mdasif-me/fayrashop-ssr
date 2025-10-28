@@ -26,7 +26,11 @@ export class AppService {
             <title>Server Status</title>
           </head>
           <body>
-            <h1>Server is running!</h1>
+            <div class="card">
+              <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+              <h1>Server is Running!</h1>
+              <p class="status">FayraShop API is Active</p>
+            </div>
           </body>
         </html>
       `;

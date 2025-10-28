@@ -25,7 +25,10 @@ async function bootstrap() {
     app.useLogger(logger);
 
     // global prefix for all routes (e.g., /api/v1/...)
-    app.setGlobalPrefix('api/v1');
+    // exclude root, health, and api-info routes from the prefix
+    app.setGlobalPrefix('api/v1', {
+      exclude: ['/', 'health', 'api-info'],
+    });
 
     // enable CORS
     app.enableCors({
@@ -68,10 +71,10 @@ async function bootstrap() {
     // start the server
     await app.listen(port, host);
 
-    logger.log(`🚀 Application is running on: ${protocol}://${host}:${port}`);
-    logger.log(`📚 API Documentation: ${protocol}://${host}:${port}/api/docs`);
+    logger.log(`application is running on: ${protocol}://${host}:${port}`);
+    logger.log(`API Documentation: ${protocol}://${host}:${port}/api/docs`);
     logger.log(
-      `🌍 Environment: ${configService.get<string>('app.nodeEnv', 'development')}`,
+      `environment: ${configService.get<string>('app.nodeEnv', 'development')}`,
     );
     logger.log(`server status: ${protocol}://${host}:${port}`);
   } catch (error) {
