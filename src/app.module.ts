@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerService } from './logger/logger.service';
-import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
+import { ErrorsFilter } from './errors/errors.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { AppController } from './root/app.controller';
@@ -44,10 +44,10 @@ import databaseConfig from './config/database.config';
   providers: [
     AppService,
     LoggerService,
-    // global exception filter - handles all uncaught exceptions
+    // global exception filter with custom error codes - handles all uncaught exceptions
     {
       provide: APP_FILTER,
-      useClass: GlobalExceptionFilter,
+      useClass: ErrorsFilter,
     },
     // global response interceptor - standardizes all API responses
     {
