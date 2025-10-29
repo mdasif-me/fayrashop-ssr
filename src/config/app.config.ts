@@ -29,9 +29,37 @@ export default registerAs('app', () => ({
     from: process.env.EMAIL_FROM || 'noreply@fayrashop.com',
   },
 
+  // cloudinary configuration
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
+    apiKey: process.env.CLOUDINARY_API_KEY || '',
+    apiSecret: process.env.CLOUDINARY_API_SECRET || '',
+    folder: process.env.CLOUDINARY_FOLDER || 'fayrashop',
+  },
+
   // file upload configuration
   upload: {
     maxFileSize: parseInt(process.env.MAX_FILE_SIZE || '5242880', 10), // 5MB
-    allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
+    allowedMimeTypes: (
+      process.env.ALLOWED_FILE_TYPES ||
+      'image/jpeg,image/png,image/webp,image/gif,application/pdf'
+    ).split(','),
+  },
+
+  // bcrypt configuration
+  bcrypt: {
+    rounds: parseInt(process.env.BCRYPT_ROUNDS || '10', 10),
+  },
+
+  // throttling/rate limiting
+  throttle: {
+    ttl: parseInt(process.env.THROTTLE_TTL || '60', 10),
+    limit: parseInt(process.env.THROTTLE_LIMIT || '10', 10),
+  },
+
+  // pagination defaults
+  pagination: {
+    defaultPageSize: parseInt(process.env.DEFAULT_PAGE_SIZE || '10', 10),
+    maxPageSize: parseInt(process.env.MAX_PAGE_SIZE || '100', 10),
   },
 }));
